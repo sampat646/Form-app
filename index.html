@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>User Info Form</title>
+  </head>
+  <body>
+    <h2>User Information Form</h2>
+    <form id="infoForm">
+      ID: <input type="text" id="id" required /><br /><br />
+      Name: <input type="text" id="name" required /><br /><br />
+      Age: <input type="number" id="age" required /><br /><br />
+      Date of Birth: <input type="date" id="dob" required /><br /><br />
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <script>
+      const scriptURL =
+        "https://script.google.com/macros/s/AKfycbwDAclIjKQlC7xD_327QZdV5JjaRmqcMyfB2BcZBgBMJxJVv1f8uxLJnjsu0fIaf0vh/exec"; // Replace with your real Web App URL
+
+      document
+        .getElementById("infoForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const data = {
+            ID: document.getElementById("id").value,
+            Name: document.getElementById("name").value,
+            Age: document.getElementById("age").value,
+            DOB: document.getElementById("dob").value,
+          };
+
+          fetch(scriptURL, {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((response) => response.text())
+            .then((result) => {
+              alert("Form submitted successfully!");
+              document.getElementById("infoForm").reset();
+            })
+            .catch((error) => {
+              alert("Error submitting form.");
+              console.error(error);
+            });
+        });
+    </script>
+  </body>
+</html>
